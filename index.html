@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Audio Spectrogram</title>
+</head>
+
+<body>
+  <div id="app">
+    <h1>Audio Spectrogram</h1>
+
+    <div class="controls">
+      <label for="audio-upload" class="upload-btn">
+        Upload Audio
+        <input type="file" id="audio-upload" accept="audio/*" />
+      </label>
+
+      <button id="play-pause" disabled aria-label="Play">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="icon-play">
+          <path fill-rule="evenodd"
+            d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z"
+            clip-rule="evenodd" />
+        </svg>
+      </button>
+
+      <button id="loop-btn" disabled aria-label="Loop">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path fill-rule="evenodd"
+            d="M4.755 10.059a7.5 7.5 0 0112.548-3.364l1.903 1.903h-3.183a.75.75 0 100 1.5h4.992a.75.75 0 00.75-.75V4.356a.75.75 0 00-1.5 0v3.18l-1.9-1.9A9 9 0 003.306 9.67a.75.75 0 101.45.388zm15.408 3.352a.75.75 0 00-.919.53 7.5 7.5 0 01-12.548 3.364l-1.902-1.903h3.183a.75.75 0 000-1.5H2.984a.75.75 0 00-.75.75v4.992a.75.75 0 001.5 0v-3.18l1.9 1.9a9 9 0 0015.059-4.035.75.75 0 00-.53-.918z"
+            clip-rule="evenodd" />
+        </svg>
+      </button>
+
+      <div class="control-group">
+        <label for="volume">Volume</label>
+        <div style="display: flex; gap: 0.5rem; align-items: center;">
+          <input type="range" id="volume" min="0" max="1" step="0.1" value="1" />
+          <button id="mute-btn" style="padding: 0.5rem;" aria-label="Mute">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+              style="width: 20px; height: 20px;">
+              <path
+                d="M13.5 4.06c0-1.336-1.616-2.005-2.56-1.06l-4.5 4.5H4.508c-1.141 0-2.318.664-2.66 1.905A9.76 9.76 0 001.5 12c0 .898.121 1.768.35 2.595.341 1.24 1.518 1.905 2.659 1.905h1.93l4.5 4.5c.945.945 2.561.276 2.561-1.06V4.06zM18.584 5.106a.75.75 0 011.06 0c3.808 3.807 3.808 9.98 0 13.788a.75.75 0 11-1.06-1.06 8.25 8.25 0 000-11.668.75.75 0 010-1.06z" />
+              <path
+                d="M15.932 7.757a.75.75 0 011.061 0 6 6 0 010 8.486.75.75 0 01-1.06-1.061 4.5 4.5 0 000-6.364.75.75 0 010-1.06z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label>Speed</label>
+        <div style="display: flex; gap: 0.25rem;">
+          <button class="speed-btn" data-speed="0.5">0.5x</button>
+          <button class="speed-btn active" data-speed="1">1x</button>
+          <button class="speed-btn" data-speed="2">2x</button>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label for="fft-size">Spectrogram Detail</label>
+        <select id="fft-size">
+          <option value="256">256</option>
+          <option value="512">512</option>
+          <option value="1024" selected>1024</option>
+          <option value="2048">2048</option>
+          <option value="4096">4096</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label for="zoom">Zoom</label>
+        <input type="range" id="zoom" min="0" max="100" value="50" />
+      </div>
+
+      <button id="expand-btn">Expand</button>
+    </div>
+
+    <div class="visualizer-container">
+      <div id="sync-line"></div>
+      <div id="loading-container" style="display: none;">
+        <div id="loading-bar"></div>
+      </div>
+      <div id="waveform"></div>
+      <div id="spectrogram"></div>
+    </div>
+  </div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>

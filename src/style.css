@@ -1,0 +1,346 @@
+:root {
+  --color-bg-dark: #0a0a0a;
+  --color-bg-panel: #141414;
+  --color-text-main: #e0e0e0;
+  --color-text-muted: #a0a0a0;
+
+  /* New Palette */
+  --color-yellow: #ffff00;
+  --color-orange: #ff9800;
+  --color-red: #f44336;
+  --color-purple: #9c27b0;
+
+  --color-border: #333333;
+  --color-silver: #c0c0c0;
+
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: dark;
+  color: var(--color-text-main);
+  background-color: var(--color-bg-dark);
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background: radial-gradient(circle at top center, #1a1a1a 0%, #000000 100%);
+}
+
+#app {
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 3rem;
+  text-align: center;
+}
+
+h1 {
+  font-size: 3.5em;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 2.5rem;
+  background: linear-gradient(135deg, var(--color-yellow) 0%, var(--color-orange) 33%, var(--color-red) 66%, var(--color-purple) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
+}
+
+.controls {
+  margin-bottom: 2.5rem;
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.control-group label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+button,
+.upload-btn {
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  padding: 0.8em 1.6em;
+  font-size: 1em;
+  font-weight: 600;
+  font-family: inherit;
+  background-color: var(--color-bg-panel);
+  color: var(--color-text-main);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+button:hover:not(:disabled),
+.upload-btn:hover {
+  border-color: var(--color-orange);
+  background-color: #1e1e1e;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(255, 152, 0, 0.15);
+  color: var(--color-orange);
+}
+
+button:active:not(:disabled),
+.upload-btn:active {
+  transform: translateY(0);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-color: transparent;
+}
+
+.upload-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload-btn input {
+  display: none;
+}
+
+/* Custom Range Input */
+input[type=range] {
+  -webkit-appearance: none;
+  width: 140px;
+  background: transparent;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: var(--color-orange);
+  cursor: pointer;
+  margin-top: -6px;
+  /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+  box-shadow: 0 0 10px rgba(255, 152, 0, 0.4);
+  transition: transform 0.1s;
+}
+
+input[type=range]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 4px;
+  cursor: pointer;
+  background: var(--color-border);
+  border-radius: 2px;
+}
+
+/* Custom Select */
+select {
+  appearance: none;
+  background-color: var(--color-bg-panel);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-main);
+  padding: 0.6em 2em 0.6em 1em;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.9em;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23c0c0c0%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.7em top 50%;
+  background-size: 0.65em auto;
+  transition: border-color 0.2s;
+}
+
+select:hover {
+  border-color: var(--color-silver);
+}
+
+select:focus {
+  outline: none;
+  border-color: var(--color-orange);
+  box-shadow: 0 0 0 2px rgba(255, 152, 0, 0.2);
+}
+
+.visualizer-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background: var(--color-bg-panel);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.visualizer-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-yellow), var(--color-orange), var(--color-red), var(--color-purple));
+  opacity: 0.8;
+  z-index: 5;
+}
+
+#sync-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: var(--color-text-main);
+  opacity: 0.5;
+  z-index: 20;
+  pointer-events: none;
+  transform: translateX(-50%);
+  display: block;
+  /* Visible by default */
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+#waveform {
+  width: 100%;
+  /* Match Spectrogram Border for alignment */
+  border: 1px solid transparent;
+  /* Or make it visible if desired, but transparent keeps the look while fixing 1px offset */
+  border-radius: 8px;
+  /* Optional, matches spectrogram radius */
+}
+
+#spectrogram {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+
+/* Loading Bar */
+#loading-container {
+  width: 100%;
+  height: 4px;
+  background-color: var(--color-bg-dark);
+  border-radius: 2px;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+#loading-bar {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-yellow), var(--color-orange));
+  transition: width 0.1s linear;
+  box-shadow: 0 0 10px var(--color-orange);
+}
+
+/* Icons */
+button svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6em;
+  /* Adjusted padding for icons */
+}
+
+/* Expanded State */
+.spectrogram-expanded #spectrogram {
+  height: 500px !important;
+}
+
+/* Force all internal wrappers and canvas to fill the container 
+   AND fix alignment shift
+*/
+.spectrogram-expanded #spectrogram>div,
+.spectrogram-expanded #spectrogram canvas,
+#spectrogram canvas {
+  /* Target canvas in all states */
+  height: 100% !important;
+  width: 100% !important;
+  /* Correction for missing labels shifting it left */
+  /* This margin-left depends on the exact internal layout, but 16px usually balances it */
+  margin-left: 0px !important;
+  /* Wait, if the user says waveform is BEHIND spectrogram, spectrogram is ahead (too far left).
+     So we need to push spectrogram right.
+     However, standard JS plugin usually renders canvas full width.
+     Let's try a small offset or verifying the container padding.
+     Actually, if spectrogram is AHEAD, it means the visual event happens sooner (left) than waveform.
+     Pushing it RIGHT (margin-left > 0) will align it.
+  */
+}
+
+/* Specific fix for the canvas inside the shadow root of spectrogram element */
+/* Since we can't style shadow DOM from here easily without ::part or js, 
+   I will assume the JS loop or the main container styles are handling size.
+   But to shift it, I might need to adjust the container padding?
+*/
+
+#spectrogram {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+
+/* Speed Buttons */
+.speed-btn {
+  padding: 0.4em 0.8em;
+  font-size: 0.85em;
+  min-width: 40px;
+}
+
+/* Active State for Toggle Buttons */
+button.active,
+.speed-btn.active {
+  background: linear-gradient(135deg, var(--color-orange), var(--color-red));
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 0 10px rgba(255, 87, 34, 0.5);
+}
+
+button.active:hover,
+.speed-btn.active:hover {
+  background: linear-gradient(135deg, var(--color-orange), var(--color-red));
+  transform: none;
+  color: white;
+  /* Ensure text stays white */
+}
