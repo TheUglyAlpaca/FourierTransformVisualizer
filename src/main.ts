@@ -15,9 +15,11 @@ const fftSelect = document.getElementById('fft-size') as HTMLSelectElement
 const zoomSlider = document.getElementById('zoom') as HTMLInputElement
 const loadingContainer = document.getElementById('loading-container') as HTMLDivElement
 const loadingBar = document.getElementById('loading-bar') as HTMLDivElement
+
 const loopButton = document.getElementById('loop-btn') as HTMLButtonElement
 const muteButton = document.getElementById('mute-btn') as HTMLButtonElement
 const speedButtons = document.querySelectorAll('.speed-btn')
+
 
 const iconPlay = `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="icon-play">
@@ -277,5 +279,7 @@ zoomSlider.addEventListener('input', (e) => {
 
   waveSurfer.zoom(zoomLevel)
 })
+
+
 
 

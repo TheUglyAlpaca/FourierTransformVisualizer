@@ -13,6 +13,9 @@
   --color-border: #333333;
   --color-silver: #c0c0c0;
 
+  --waveform-offset: 0px;
+  --spectrogram-offset: 0px;
+
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -232,13 +235,18 @@ select:focus {
   box-sizing: border-box;
 }
 
+#waveform-wrapper {
+  width: 100%;
+  border-radius: 8px;
+  /* Ensure it doesn't collapse */
+  min-height: 128px;
+  transform: translateX(var(--waveform-offset));
+}
+
 #waveform {
   width: 100%;
-  /* Match Spectrogram Border for alignment */
   border: 1px solid transparent;
-  /* Or make it visible if desired, but transparent keeps the look while fixing 1px offset */
   border-radius: 8px;
-  /* Optional, matches spectrogram radius */
 }
 
 #spectrogram {
@@ -289,6 +297,11 @@ button {
    I will assume the JS loop or the main container styles are handling size.
    But to shift it, I might need to adjust the container padding?
 */
+
+#spectrogram-wrapper {
+  width: 100%;
+  transform: translateX(var(--spectrogram-offset));
+}
 
 #spectrogram {
   width: 100%;
