@@ -13,19 +13,19 @@ A tool for analyzing music through audio visualization. Upload audio files to vi
    ```
 
 2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+    ```bash
+    npm install
+    ```
 
 3. **Run the development server**
-   ```bash
-   npm run dev
-   ```
+    ```bash
+    npm run dev
+    ```
 
 4. **Build for production**
-   ```bash
-   npm run build
-   ```
+    ```bash
+    npm run build
+    ```
 
 ## Understanding Audio Visualization
 
@@ -35,19 +35,21 @@ A Fourier Transform is a mathematical operation that decomposes a signal from th
 
 When you hear music, you're experiencing sound waves that vary over time. A Fourier Transform breaks down these complex waves into their component frequencies, revealing the fundamental tones, harmonics, and overtones that make up the sound.
 
-The continuous Fourier Transform is defined by the equation:
+In digital audio processing, we use the **Discrete Fourier Transform (DFT)** or its efficient implementation, the **Fast Fourier Transform (FFT)**, which samples the signal at discrete time intervals and computes the frequency components.
+
+The Discrete Fourier Transform is defined by the equation:
 
 $$
-F(\omega) = \int_{-\infty}^{\infty} f(t) e^{-i\omega t} dt
+X[k] = \sum_{n=0}^{N-1} x[n] e^{-i \frac{2\pi k n}{N}}
 $$
 
 Where:
-- $F(\omega)$ is the frequency domain representation
-- $f(t)$ is the time domain signal
-- $\omega$ is the angular frequency
+- $X[k]$ is the frequency domain representation (the $k$-th frequency bin)
+- $x[n]$ is the time domain signal (the $n$-th sample)
+- $N$ is the number of samples
+- $k$ is the frequency bin index (ranging from 0 to $N-1$)
+- $n$ is the sample index (ranging from 0 to $N-1$)
 - $i$ is the imaginary unit
-
-In digital audio processing, we use the **Discrete Fourier Transform (DFT)** or its efficient implementation, the **Fast Fourier Transform (FFT)**, which samples the signal at discrete time intervals and computes the frequency components.
 
 ### Waveform (Time Domain)
 
