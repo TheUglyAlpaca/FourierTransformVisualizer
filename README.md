@@ -37,15 +37,15 @@ When you hear music, you're experiencing sound waves that vary over time. A Four
 
 The continuous Fourier Transform is defined by the equation:
 
-\[
+$$
 F(\omega) = \int_{-\infty}^{\infty} f(t) e^{-i\omega t} dt
-\]
+$$
 
 Where:
-- \(F(\omega)\) is the frequency domain representation
-- \(f(t)\) is the time domain signal
-- \(\omega\) is the angular frequency
-- \(i\) is the imaginary unit
+- $F(\omega)$ is the frequency domain representation
+- $f(t)$ is the time domain signal
+- $\omega$ is the angular frequency
+- $i$ is the imaginary unit
 
 In digital audio processing, we use the **Discrete Fourier Transform (DFT)** or its efficient implementation, the **Fast Fourier Transform (FFT)**, which samples the signal at discrete time intervals and computes the frequency components.
 
