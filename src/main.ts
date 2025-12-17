@@ -13,7 +13,6 @@ const playButton = document.getElementById('play-pause') as HTMLButtonElement
 const volumeSlider = document.getElementById('volume') as HTMLInputElement
 const fftSelect = document.getElementById('fft-size') as HTMLSelectElement
 const zoomSlider = document.getElementById('zoom') as HTMLInputElement
-const expandButton = document.getElementById('expand-btn') as HTMLButtonElement
 const loadingContainer = document.getElementById('loading-container') as HTMLDivElement
 const loadingBar = document.getElementById('loading-bar') as HTMLDivElement
 const loopButton = document.getElementById('loop-btn') as HTMLButtonElement
@@ -75,7 +74,7 @@ function initWaveSurfer(url: string, fftSamples: number) {
       Spectrogram.create({
         container: containerSpectrogram,
         labels: true,
-        height: 256,
+        height: 512,
         fftSamples: fftSamples,
         labelsBackground: '#141414',
         labelsColor: '#c0c0c0',
@@ -116,10 +115,10 @@ function initWaveSurfer(url: string, fftSamples: number) {
     loopButton.disabled = false
     playButton.innerHTML = iconPlay
 
-    // Reset Zoom to default (50) and apply it
-    zoomSlider.value = '50'
+    // Reset Zoom to default (500) and apply it
+    zoomSlider.value = '500'
     const minPx = 20
-    const maxPx = 200
+    const maxPx = 1000
     // 50% of the range
     const zoomLevel = minPx + (maxPx - minPx) * 0.5
     waveSurfer?.zoom(zoomLevel)
@@ -273,43 +272,10 @@ zoomSlider.addEventListener('input', (e) => {
   // Min pxPerSec = 20 (default roughly), Max = 1000?
   // Let's map 0-100 to minPxPerSec
   const minPx = 20
-  const maxPx = 200
-  const zoomLevel = minPx + (maxPx - minPx) * (value / 100)
+  const maxPx = 1000
+  const zoomLevel = minPx + (maxPx - minPx) * (value / 1000)
 
   waveSurfer.zoom(zoomLevel)
 })
 
-// Expand Spectrogram
-expandButton.addEventListener('click', () => {
-  const container = document.querySelector('.visualizer-container')
-  container?.classList.toggle('spectrogram-expanded')
-  const isExpanded = container?.classList.contains('spectrogram-expanded') ?? false
 
-  if (isExpanded) {
-    expandButton.textContent = 'Collapse'
-  } else {
-    expandButton.textContent = 'Expand'
-  }
-
-  // Force resize internal elements
-  const spectrogramEl = document.getElementById('spectrogram')
-  if (spectrogramEl) {
-    // 1. Try to access Shadow Root if present
-    const root = spectrogramEl.shadowRoot || spectrogramEl
-
-    // 2. Find internal wrapper and canvas
-    // WaveSurfer Spectrogram usually creates a wrapper div and a canvas inside
-    const children = root.querySelectorAll('div, canvas')
-    children.forEach(child => {
-      const el = child as HTMLElement
-      if (isExpanded) {
-        el.style.height = '100%'
-        el.style.width = '100%'
-      } else {
-        // Remove inline styles to revert to defaults (or CSS)
-        el.style.height = ''
-        el.style.width = ''
-      }
-    })
-  }
-})

@@ -44,8 +44,9 @@ h1 {
   font-weight: 800;
   letter-spacing: -0.02em;
   margin-bottom: 2.5rem;
-  background: linear-gradient(135deg, var(--color-yellow) 0%, var(--color-orange) 33%, var(--color-red) 66%, var(--color-purple) 100%);
+  background: linear-gradient(90deg, var(--color-yellow) 0%, var(--color-orange) 33%, var(--color-red) 66%, var(--color-purple) 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
 }
@@ -127,6 +128,7 @@ button:disabled {
 /* Custom Range Input */
 input[type=range] {
   -webkit-appearance: none;
+  appearance: none;
   width: 140px;
   background: transparent;
 }
@@ -282,33 +284,7 @@ button {
   /* Adjusted padding for icons */
 }
 
-/* Expanded State */
-.spectrogram-expanded #spectrogram {
-  height: 500px !important;
-}
 
-/* Force all internal wrappers and canvas to fill the container 
-   AND fix alignment shift
-*/
-.spectrogram-expanded #spectrogram>div,
-.spectrogram-expanded #spectrogram canvas,
-#spectrogram canvas {
-  /* Target canvas in all states */
-  height: 100% !important;
-  width: 100% !important;
-  /* Correction for missing labels shifting it left */
-  /* This margin-left depends on the exact internal layout, but 16px usually balances it */
-  margin-left: 0px !important;
-  /* Wait, if the user says waveform is BEHIND spectrogram, spectrogram is ahead (too far left).
-     So we need to push spectrogram right.
-     However, standard JS plugin usually renders canvas full width.
-     Let's try a small offset or verifying the container padding.
-     Actually, if spectrogram is AHEAD, it means the visual event happens sooner (left) than waveform.
-     Pushing it RIGHT (margin-left > 0) will align it.
-  */
-}
-
-/* Specific fix for the canvas inside the shadow root of spectrogram element */
 /* Since we can't style shadow DOM from here easily without ::part or js, 
    I will assume the JS loop or the main container styles are handling size.
    But to shift it, I might need to adjust the container padding?
