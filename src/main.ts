@@ -2,12 +2,10 @@ import './style.css'
 import WaveSurfer from 'wavesurfer.js'
 import Spectrogram from 'wavesurfer.js/dist/plugins/spectrogram.js'
 
-// --- Init & Configuration ---
 let waveSurfer: WaveSurfer | null = null
 const containerWaveform = '#waveform'
 const containerSpectrogram = '#spectrogram'
 
-// DOM Elements
 const fileInput = document.getElementById('audio-upload') as HTMLInputElement
 const playButton = document.getElementById('play-pause') as HTMLButtonElement
 const volumeSlider = document.getElementById('volume') as HTMLInputElement
@@ -40,34 +38,28 @@ const iconVolume = `
 const iconMute = `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width: 20px; height: 20px;">
   <path d="M13.5 4.06c0-1.336-1.616-2.005-2.56-1.06l-4.5 4.5H4.508c-1.141 0-2.318.664-2.66 1.905A9.76 9.76 0 001.5 12c0 .898.121 1.768.35 2.595.341 1.24 1.518 1.905 2.659 1.905h1.93l4.5 4.5c.945.945 2.561.276 2.561-1.06V4.06zM17.78 9.22a.75.75 0 10-1.06 1.06L18.44 12l-1.72 1.72a.75.75 0 101.06 1.06l1.72-1.72 1.72 1.72a.75.75 0 101.06-1.06L20.56 12l1.72-1.72a.75.75 0 10-1.06-1.06l-1.72 1.72-1.72-1.72z" />
-</svg>
+  </svg>
 `
 
-// State
 let currentFileUrl: string | null = null
 let isLooping = false
 let isMuted = false
 
-// --- Functions ---
-
 function initWaveSurfer(url: string, fftSamples: number) {
-  // Destroy existing instance if any (to re-init with new Spectrogram settings)
   if (waveSurfer) {
     waveSurfer.destroy()
   }
 
-
-  // Create Gradient
   const ctx = document.createElement('canvas').getContext('2d')!
   const gradient = ctx.createLinearGradient(0, 0, 0, 128)
-  gradient.addColorStop(0, '#ffff00') // Yellow
-  gradient.addColorStop(0.33, '#ff9800') // Orange
-  gradient.addColorStop(0.66, '#f44336') // Red
-  gradient.addColorStop(1, '#9c27b0') // Purple
+  gradient.addColorStop(0, '#ffff00')
+  gradient.addColorStop(0.33, '#ff9800')
+  gradient.addColorStop(0.66, '#f44336')
+  gradient.addColorStop(1, '#9c27b0')
 
   waveSurfer = WaveSurfer.create({
     container: containerWaveform,
-    waveColor: '#4a4a4a', // Darker base color
+    waveColor: '#4a4a4a',
     progressColor: gradient,
     url: url,
     height: 128,
@@ -84,44 +76,27 @@ function initWaveSurfer(url: string, fftSamples: number) {
     ],
   })
 
-  // Show loading container
   loadingContainer.style.display = 'block'
   loadingBar.style.width = '0%'
 
-  // Loading progress
   waveSurfer.on('loading', (percent: number) => {
     loadingBar.style.width = `${percent}%`
   })
 
-  // 1. Waveform Ready
   waveSurfer.on('ready', () => {
-    // Note: Spectrogram generation might still be happening.
-    // However, WaveSurfer doesn't expose a clean "spectrogram-ready" event on the main instance easily
-    // for all versions. But usually 'ready' means decoded.
-
-    // We delay hiding the loading bar slightly to allow spectrogram to render if it's fast,
-    // or we could listen to the plugin if we had a ref. 
-    // Since Spectrogram is synchronous on the decoded buffer usually, it might block the UI.
-    // To make the loading bar "feel" right for DFT, we'll fake a small delay or check connection.
-
-    // Actually, in the current version, there isn't a specific async event for spectrogram calculation completion exposed globally.
-    // But we can ensure the bar fills up.
-
     loadingBar.style.width = '100%'
 
     setTimeout(() => {
       loadingContainer.style.display = 'none'
-    }, 500) // Increased delay to cover typical small file DFT time
+    }, 500)
 
     playButton.disabled = false
     loopButton.disabled = false
     playButton.innerHTML = iconPlay
 
-    // Reset Zoom to default (500) and apply it
     zoomSlider.value = '500'
     const minPx = 20
     const maxPx = 1000
-    // 50% of the range
     const zoomLevel = minPx + (maxPx - minPx) * 0.5
     waveSurfer?.zoom(zoomLevel)
   })
@@ -134,11 +109,7 @@ function initWaveSurfer(url: string, fftSamples: number) {
     }
   })
 
-  // Set initial volume
   waveSurfer?.setVolume(parseFloat(volumeSlider.value))
-
-  // Event Listeners
-  // (Ready listener moved up)
 
   waveSurfer.on('play', () => {
     playButton.innerHTML = iconPause
@@ -147,13 +118,8 @@ function initWaveSurfer(url: string, fftSamples: number) {
   waveSurfer.on('pause', () => {
     playButton.innerHTML = iconPlay
   })
-
-  // (Finish listener moved up)
 }
 
-// --- User Interactions ---
-
-// File Upload
 fileInput.addEventListener('change', (e) => {
   const target = e.target as HTMLInputElement
   const file = target.files?.[0]
@@ -164,14 +130,12 @@ fileInput.addEventListener('change', (e) => {
 
     playButton.disabled = true
     loopButton.disabled = true
-    // Keep the icon as play or show a loading state if desired, but button is disabled
     playButton.innerHTML = iconPlay
 
     initWaveSurfer(currentFileUrl, fftSamples)
   }
 })
 
-// Play/Pause
 playButton.addEventListener('click', () => {
   if (!waveSurfer) return
 
@@ -182,7 +146,6 @@ playButton.addEventListener('click', () => {
   }
 })
 
-// Volume Control
 volumeSlider.addEventListener('input', (e) => {
   if (!waveSurfer) return
   const target = e.target as HTMLInputElement
@@ -199,7 +162,6 @@ volumeSlider.addEventListener('input', (e) => {
   }
 })
 
-// Mute Control
 muteButton.addEventListener('click', () => {
   if (!waveSurfer) return
   isMuted = !isMuted
@@ -213,7 +175,6 @@ muteButton.addEventListener('click', () => {
   }
 })
 
-// Loop Control
 loopButton.addEventListener('click', () => {
   isLooping = !isLooping
   if (isLooping) {
@@ -221,11 +182,8 @@ loopButton.addEventListener('click', () => {
   } else {
     loopButton.classList.remove('active')
   }
-  // WaveSurfer doesn't natively expose loop property easily on the instance without backend config,
-  // but we are using the 'finish' event listener to handle loop manually.
 })
 
-// Speed Control
 speedButtons.forEach(btn => {
   btn.addEventListener('click', (e) => {
     if (!waveSurfer) return
@@ -234,28 +192,22 @@ speedButtons.forEach(btn => {
 
     waveSurfer.setPlaybackRate(speed)
 
-    // Update active class
     speedButtons.forEach(b => b.classList.remove('active'))
     target.classList.add('active')
   })
 })
 
-// FFT Size Control
 fftSelect.addEventListener('change', (e) => {
   if (!currentFileUrl) return
 
-  // We need to re-initialize WaveSurfer to change spectrogram FFT size
-  // Note: WaveSurfer spectrogram plugin doesn't support dynamic update of fftSamples without re-init currently
   const target = e.target as HTMLSelectElement
   const fftSamples = parseInt(target.value)
 
-  // Save current playback state
   const wasPlaying = waveSurfer?.isPlaying() ?? false
   const currentTime = waveSurfer?.getCurrentTime() ?? 0
 
   initWaveSurfer(currentFileUrl, fftSamples)
 
-  // Restore state once ready
   if (waveSurfer) {
     waveSurfer.once('ready', () => {
       waveSurfer?.setTime(currentTime)
@@ -266,13 +218,10 @@ fftSelect.addEventListener('change', (e) => {
   }
 })
 
-// Zoom Control
 zoomSlider.addEventListener('input', (e) => {
   if (!waveSurfer) return
   const target = e.target as HTMLInputElement
   const value = parseInt(target.value)
-  // Min pxPerSec = 20 (default roughly), Max = 1000?
-  // Let's map 0-100 to minPxPerSec
   const minPx = 20
   const maxPx = 1000
   const zoomLevel = minPx + (maxPx - minPx) * (value / 1000)

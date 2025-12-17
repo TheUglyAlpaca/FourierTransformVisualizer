@@ -4,7 +4,6 @@
   --color-text-main: #e0e0e0;
   --color-text-muted: #a0a0a0;
 
-  /* New Palette */
   --color-yellow: #ffff00;
   --color-orange: #ff9800;
   --color-red: #f44336;
@@ -175,7 +174,6 @@ input[type=range]::-webkit-slider-thumb {
   background: var(--color-orange);
   cursor: pointer;
   margin-top: -6px;
-  /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
   box-shadow: 0 0 10px rgba(255, 152, 0, 0.4);
   transition: transform 0.1s;
 }
@@ -259,7 +257,6 @@ select:focus {
   pointer-events: none;
   transform: translateX(-50%);
   display: block;
-  /* Visible by default */
 }
 
 *,
@@ -271,7 +268,6 @@ select:focus {
 #waveform-wrapper {
   width: 100%;
   border-radius: 8px;
-  /* Ensure it doesn't collapse */
   min-height: 128px;
   transform: translateX(var(--waveform-offset));
 }
@@ -317,13 +313,6 @@ button svg {
   display: block;
 }
 
-
-
-/* Since we can't style shadow DOM from here easily without ::part or js, 
-   I will assume the JS loop or the main container styles are handling size.
-   But to shift it, I might need to adjust the container padding?
-*/
-
 #spectrogram-wrapper {
   width: 100%;
   transform: translateX(var(--spectrogram-offset));
@@ -359,5 +348,4 @@ button.active:hover,
   background: linear-gradient(135deg, var(--color-orange), var(--color-red));
   transform: none;
   color: white;
-  /* Ensure text stays white */
 }
