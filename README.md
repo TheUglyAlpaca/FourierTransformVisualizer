@@ -2,6 +2,8 @@
 
 A tool for analyzing music through audio visualization. Upload audio files to view waveforms and frequency spectrograms, helping you understand the frequency composition and structure of your music.
 
+![Audio Spectrogram Visualizer](screenshot.png)
+
 ## Installation
 
 1. **Clone the repository**
@@ -32,6 +34,20 @@ A tool for analyzing music through audio visualization. Upload audio files to vi
 A Fourier Transform is a mathematical operation that decomposes a signal from the **time domain** (how a signal changes over time) into the **frequency domain** (what frequencies are present in the signal). In audio analysis, this allows us to see which frequencies (pitches) are present in a sound at any given moment.
 
 When you hear music, you're experiencing sound waves that vary over time. A Fourier Transform breaks down these complex waves into their component frequencies, revealing the fundamental tones, harmonics, and overtones that make up the sound.
+
+The continuous Fourier Transform is defined by the equation:
+
+\[
+F(\omega) = \int_{-\infty}^{\infty} f(t) e^{-i\omega t} dt
+\]
+
+Where:
+- \(F(\omega)\) is the frequency domain representation
+- \(f(t)\) is the time domain signal
+- \(\omega\) is the angular frequency
+- \(i\) is the imaginary unit
+
+In digital audio processing, we use the **Discrete Fourier Transform (DFT)** or its efficient implementation, the **Fast Fourier Transform (FFT)**, which samples the signal at discrete time intervals and computes the frequency components.
 
 ### Waveform (Time Domain)
 
